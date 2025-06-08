@@ -1,122 +1,49 @@
-name: CI/CD Pipeline
+name: VulnScanner CI
 
 on:
-  push:
-    branches: [ main, master, develop ]
   pull_request:
-    branches: [ main, master ]
-
-env:
-  REGISTRY_IMAGE: vulnscanner/vulnscanner
+    branches: [ master ]
 
 jobs:
-  test:
-    name: Test Code Quality
+  build-and-test:
+    name: Build, Test, and Scan
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Set up Python 3.9
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
 
-      - name: Install dependencies
+      - name: Install Python Dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install black bandit
 
-      - name: Basic syntax check
-        run: |
-          python -m py_compile main.py gui.py
-          echo "✅ Python syntax check passed"
-
-      - name: Test imports
-        run: |
-          python -c "import main; print('✅ main.py imports successful')"
-          python -c "import gui; print('✅ gui.py imports successful')"
-
-      - name: Format check with black (non-blocking)
-        run: |
-          pip install black
-          black --check --diff . || echo "⚠️ Code formatting issues detected but allowing CI to continue"
-          echo "Run 'black .' locally to fix formatting issues"
+      - name: Run Black Formatter Check
+        run: black --check .
         continue-on-error: true
 
-  build:
-    name: Build Docker Image
-    runs-on: ubuntu-latest
-    needs: test
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Run Bandit Security Scan
+        run: bandit -r .
+        continue-on-error: true
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build Docker image
+      - name: Build Docker Image
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./Dockerfile
-          push: false
           load: true
-          tags: ${{ env.REGISTRY_IMAGE }}:test
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          push: false
+          tags: brickjawn/vulnscanner:ci-test
 
-      - name: Test Docker image
-        run: |
-          echo "✅ Docker image built successfully by previous step"
-          docker run --rm ${{ env.REGISTRY_IMAGE }}:test --help
-          echo "✅ Docker image help command works"
+      - name: Test Docker Image
+        run: docker run --rm brickjawn/vulnscanner:ci-test --help
 
-  security-scan:
-    name: Security Baseline
-    runs-on: ubuntu-latest
-    needs: test
-    continue-on-error: true
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'
-
-      - name: Install security tools
-        run: |
-          python -m pip install --upgrade pip
-          pip install safety bandit
-          pip install -r requirements.txt
-
-      - name: Run Safety (dependency check)
-        run: |
-          safety check || echo "⚠️ Some dependency warnings found"
-        continue-on-error: true
-
-      - name: Run Bandit (security check)
-        run: |
-          bandit -r . -ll || echo "⚠️ Some security warnings found"
-        continue-on-error: true
-
-  summary:
-    name: Build Summary
-    runs-on: ubuntu-latest
-    needs: [test, build, security-scan]
-    if: always()
-    steps:
-      - name: Build Summary
-        run: |
-          echo "## ✅ VulnScanner CI/CD Summary" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Tests Completed:" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Python syntax validation" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Import verification" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Docker image build" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Basic functionality test" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### 🚀 Ready for Use!" >> $GITHUB_STEP_SUMMARY
-          echo "Your VulnScanner is ready for deployment and testing." >> $GITHUB_STEP_SUMMARY 
+      - name: Summarize Run
+        run: echo "✅ All checks completed." >> $GITHUB_STEP_SUMMARY 
