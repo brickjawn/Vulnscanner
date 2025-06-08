@@ -1,0 +1,109 @@
+version: '3.8'
+
+services:
+  vulnscanner:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    image: vulnscanner:latest
+    container_name: vulnscanner
+    restart: unless-stopped
+    
+    # Security configurations
+    security_opt:
+      - no-new-privileges:true
+    read_only: false
+    user: "1000:1000"
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '2.0'
+        reservations:
+          memory: 256M
+          cpus: '0.5'
+    
+    # Environment variables
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=UTC
+      - SCANNER_OUTPUT_DIR=/app/reports
+      - SCANNER_LOG_LEVEL=INFO
+    
+    # Volume mounts for persistence
+    volumes:
+      - ./reports:/app/reports:rw
+      - ./logs:/app/logs:rw
+      - /etc/localtime:/etc/localtime:ro
+    
+    # Network configuration
+    networks:
+      - scanner-network
+    
+    # DNS configuration for better resolution
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    
+    # Custom command (override with docker-compose run)
+    command: ["--help"]
+
+  # GUI service with VNC access
+  vulnscanner-gui:
+    build:
+      context: .
+      dockerfile: Dockerfile.gui
+      target: gui
+    image: vulnscanner-gui:latest
+    container_name: vulnscanner-gui
+    restart: unless-stopped
+    
+    ports:
+      - "5900:5900"  # VNC
+      - "6080:6080"  # noVNC web interface
+    
+    environment:
+      - DISPLAY=:1
+      - VNC_PASSWORD=vulnscan123
+      - RESOLUTION=1024x768
+    
+    volumes:
+      - ./reports:/app/reports:rw
+      - ./logs:/app/logs:rw
+    
+    networks:
+      - scanner-network
+
+  # Optional: Web-based report viewer
+  report-viewer:
+    image: nginx:alpine
+    container_name: vulnscanner-reports
+    restart: unless-stopped
+    
+    ports:
+      - "8080:80"
+    
+    volumes:
+      - ./reports:/usr/share/nginx/html/reports:ro
+      - ./docker/nginx.conf:/etc/nginx/nginx.conf:ro
+    
+    networks:
+      - scanner-network
+    
+    depends_on:
+      - vulnscanner
+
+networks:
+  scanner-network:
+    driver: bridge
+    name: vulnscanner-net
+
+# Named volumes for persistent data
+volumes:
+  scanner-reports:
+    driver: local
+  scanner-logs:
+    driver: local 

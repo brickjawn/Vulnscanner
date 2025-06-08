@@ -1,0 +1,91 @@
+# GUI-enabled version with VNC support
+FROM python:3.11-alpine AS gui-builder
+
+# Install build dependencies
+RUN apk add --no-cache \
+    gcc \
+    musl-dev \
+    libffi-dev \
+    openssl-dev \
+    python3-dev \
+    build-base \
+    tk-dev \
+    tcl-dev
+
+# Create virtual environment
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Copy requirements and install Python dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+# GUI production stage
+FROM python:3.11-alpine AS gui
+
+# Install runtime dependencies for GUI and VNC
+RUN apk add --no-cache \
+    nmap \
+    nmap-scripts \
+    tk \
+    tcl \
+    xvfb \
+    x11vnc \
+    fluxbox \
+    websockify \
+    novnc \
+    curl \
+    ca-certificates \
+    tzdata \
+    bash \
+    && rm -rf /var/cache/apk/*
+
+# Copy virtual environment from builder
+COPY --from=gui-builder /opt/venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Create non-root user
+RUN addgroup -g 1000 vulnscanner && \
+    adduser -D -s /bin/bash -u 1000 -G vulnscanner vulnscanner
+
+# Set up VNC directory
+RUN mkdir -p /home/vulnscanner/.vnc && \
+    chown -R vulnscanner:vulnscanner /home/vulnscanner
+
+# Set working directory
+WORKDIR /app
+
+# Copy application files
+COPY --chown=vulnscanner:vulnscanner . .
+
+# Create directories
+RUN mkdir -p /app/reports /app/logs && \
+    chown -R vulnscanner:vulnscanner /app
+
+# Copy VNC startup script
+COPY docker/start-vnc.sh /usr/local/bin/start-vnc.sh
+RUN chmod +x /usr/local/bin/start-vnc.sh
+
+# Switch to non-root user
+USER vulnscanner
+
+# Set up VNC password
+RUN mkdir -p ~/.vnc && \
+    x11vnc -storepasswd vulnscan123 ~/.vnc/passwd
+
+# Environment variables for GUI
+ENV DISPLAY=:1
+ENV VNC_PORT=5900
+ENV NOVNC_PORT=6080
+ENV RESOLUTION=1024x768
+
+# Expose VNC and noVNC ports
+EXPOSE 5900 6080
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
+    CMD pgrep Xvfb > /dev/null || exit 1
+
+# Start VNC and GUI
+CMD ["/usr/local/bin/start-vnc.sh"] 
