@@ -1,5 +1,5 @@
 # Multi-stage build for minimal production image
-FROM python:3.11-alpine AS builder
+FROM python:3.13-alpine AS builder
 
 # Install build dependencies
 RUN apk add --no-cache \
@@ -20,7 +20,7 @@ RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
 # Production stage
-FROM python:3.11-alpine AS production
+FROM python:3.13-alpine AS production
 
 # Install runtime dependencies
 RUN apk add --no-cache \
