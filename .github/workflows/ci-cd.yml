@@ -61,17 +61,15 @@ jobs:
           context: .
           file: ./Dockerfile
           push: false
+          load: true
           tags: ${{ env.REGISTRY_IMAGE }}:test
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
       - name: Test Docker image
         run: |
-          docker build -t vulnscanner:test .
-          echo "✅ Docker image built successfully"
-          
-          # Test basic functionality
-          docker run --rm vulnscanner:test --help
+          echo "✅ Docker image built successfully by previous step"
+          docker run --rm ${{ env.REGISTRY_IMAGE }}:test --help
           echo "✅ Docker image help command works"
 
   security-scan:
