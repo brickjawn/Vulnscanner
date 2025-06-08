@@ -8,6 +8,8 @@
 ![License](https://img.shields.io/badge/License-Educational-green?style=for-the-badge)
 [![Docker Pulls](https://img.shields.io/docker/pulls/vulnscanner/vulnscanner?style=for-the-badge)](https://hub.docker.com/r/vulnscanner/vulnscanner)
 [![GitHub Stars](https://img.shields.io/github/stars/your-username/vulnscanner?style=for-the-badge)](https://github.com/your-username/vulnscanner/stargazers)
+[![CI/CD Pipeline](https://img.shields.io/github/actions/workflow/status/your-username/vulnscanner/ci-cd.yml?branch=main&style=for-the-badge&label=CI%2FCD)](https://github.com/your-username/vulnscanner/actions/workflows/ci-cd.yml)
+[![Security Scan](https://img.shields.io/github/actions/workflow/status/your-username/vulnscanner/security.yml?branch=main&style=for-the-badge&label=Security)](https://github.com/your-username/vulnscanner/actions/workflows/security.yml)
 
 ## 📚 Table of Contents
 
@@ -19,6 +21,7 @@
 - [📊 Output Examples](#-output-examples)
 - [⚙️ Configuration](#-configuration-options)
 - [🐳 Docker Best Practices](#-docker-best-practices)
+- [🔄 CI/CD Pipeline](#-cicd-pipeline)
 - [🛡️ Security Features](#️-security-features)
 - [📁 Project Structure](#-project-structure)
 - [🤝 Contributing](#-contributing)
@@ -322,6 +325,13 @@ vulnscanner/
 ├── docker-compose.yml      # Docker Compose configuration
 ├── .dockerignore           # Docker ignore patterns
 ├── README.md              # Documentation
+├── .github/               # GitHub configuration
+│   ├── workflows/         # CI/CD workflows
+│   │   ├── ci-cd.yml      # Main CI/CD pipeline
+│   │   └── security.yml   # Security scanning workflow
+│   ├── codeql/            # CodeQL configuration
+│   │   └── codeql-config.yml
+│   └── dependabot.yml     # Dependency update automation
 ├── scanner/               # Core scanning modules
 │   ├── __init__.py
 │   ├── crawler.py         # Web crawling functionality
@@ -388,6 +398,64 @@ services:
     volumes:
       - ./reports:/app/reports:rw
 ```
+
+## 🔄 CI/CD Pipeline
+
+### Automated Workflows
+
+**Every commit triggers our comprehensive CI/CD pipeline:**
+
+#### 🧪 **Testing & Quality Assurance**
+- **Code Quality**: Automated linting with flake8 and formatting checks with black
+- **Security Testing**: Static analysis with CodeQL, Bandit, and Semgrep
+- **Dependency Scanning**: Vulnerability checks with Safety and Dependabot
+- **Secret Scanning**: TruffleHog for credential detection
+
+#### 🐳 **Container Security**
+- **Multi-stage Builds**: Optimized Docker images with security layers
+- **Vulnerability Scanning**: Trivy scanner for container vulnerabilities
+- **Image Signing**: Cosign integration for supply chain security
+- **Multi-platform**: AMD64 and ARM64 support
+
+#### 📦 **Automated Publishing**
+- **Docker Hub**: Automatic image publishing with semantic versioning
+- **GitHub Container Registry**: GHCR integration for enterprise use
+- **Security Reports**: Automated SARIF uploads to GitHub Security tab
+- **Release Notes**: Auto-generated with security scan summaries
+
+#### 🛡️ **Security-First Approach**
+```yaml
+# Weekly automated security scans
+schedule:
+  - cron: '0 2 * * 0'  # Security scan every Sunday
+  - cron: '0 3 * * *'  # Dependency updates daily
+```
+
+#### 🔍 **Pipeline Features**
+- **Parallel Execution**: Fast builds with concurrent jobs
+- **Smart Caching**: Docker layer caching for speed
+- **Fail-Fast**: Stop on critical security vulnerabilities
+- **Detailed Reporting**: Comprehensive security summaries
+
+### Setting Up CI/CD
+
+1. **GitHub Secrets Required:**
+   ```bash
+   DOCKERHUB_USERNAME=your-dockerhub-username
+   DOCKERHUB_TOKEN=your-dockerhub-access-token
+   ```
+
+2. **Automatic Triggers:**
+   - Push to `main`/`master` → Full pipeline
+   - Pull requests → Security + build testing
+   - Tagged releases → Multi-platform publishing
+   - Scheduled → Weekly security scans
+
+3. **Security Integration:**
+   - Results appear in GitHub Security tab
+   - SARIF reports for detailed analysis
+   - Automated dependency updates
+   - Supply chain security monitoring
 
 ## 🚨 Legal Disclaimer
 

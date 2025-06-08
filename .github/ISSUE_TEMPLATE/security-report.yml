@@ -1,0 +1,109 @@
+name: 🔒 Security Vulnerability Report
+description: Report a security vulnerability found in VulnScanner
+title: "[SECURITY] "
+labels: ["security", "vulnerability", "needs-triage"]
+assignees:
+  - your-username
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## ⚠️ Security Vulnerability Report
+        
+        **Thank you for responsibly disclosing security issues!**
+        
+        Please provide as much detail as possible to help us understand and reproduce the issue.
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity Level
+      description: How severe is this vulnerability?
+      options:
+        - Critical (Remote code execution, privilege escalation)
+        - High (Data exposure, authentication bypass)
+        - Medium (Information disclosure, denial of service)
+        - Low (Minor information leakage)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Affected Component
+      description: Which part of VulnScanner is affected?
+      options:
+        - Scanner Engine
+        - Web Crawler
+        - XSS Detection
+        - SQL Injection Detection
+        - Port Scanner
+        - GUI Interface
+        - Docker Container
+        - Dependencies
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Vulnerability Description
+      description: Provide a clear and detailed description of the vulnerability
+      placeholder: Describe the security issue...
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: Provide step-by-step instructions to reproduce the vulnerability
+      placeholder: |
+        1. Step one...
+        2. Step two...
+        3. Step three...
+    validations:
+      required: true
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact Assessment
+      description: What could an attacker achieve by exploiting this vulnerability?
+      placeholder: Describe the potential impact...
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment Details
+      description: Provide details about your testing environment
+      placeholder: |
+        - OS: 
+        - Python version: 
+        - VulnScanner version: 
+        - Docker version (if applicable):
+    validations:
+      required: true
+
+  - type: textarea
+    id: mitigation
+    attributes:
+      label: Suggested Mitigation
+      description: Do you have any suggestions for fixing this vulnerability?
+      placeholder: Suggested fix or mitigation...
+
+  - type: checkboxes
+    id: disclosure
+    attributes:
+      label: Responsible Disclosure
+      description: Please confirm your commitment to responsible disclosure
+      options:
+        - label: I have not publicly disclosed this vulnerability
+          required: true
+        - label: I agree to work with the maintainers to resolve this issue
+          required: true
+        - label: I understand this may take time to investigate and fix
+          required: true 

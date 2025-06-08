@@ -1,0 +1,19 @@
+name: "VulnScanner CodeQL Configuration"
+
+disable-default-queries: false
+
+queries:
+  - uses: security-and-quality
+  - uses: security-extended
+
+paths-ignore:
+  - "venv/**"
+  - "**/*.pyc"
+  - ".git/**"
+  - "logs/**"
+  - "reports/**"
+
+paths:
+  - "scanner/**"
+  - "main.py"
+  - "gui.py" 
