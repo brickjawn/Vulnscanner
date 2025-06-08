@@ -2,6 +2,7 @@ import requests
 from urllib.parse import urljoin
 from colorama import Fore, Style
 import re
+import queue
 
 # SQL injection payloads for different databases
 SQLI_PAYLOADS = [
@@ -190,8 +191,11 @@ def test_sqli(links, forms, progress_callback=None):
                         print(f"{Fore.YELLOW}[!] Timeout testing SQLi on {action}{Style.RESET_ALL}")
                     except requests.exceptions.RequestException:
                         pass  # Continue with next test
-                    except Exception:
+                    except queue.Empty:
                         pass  # Continue with next test
+                    except Exception as e:
+                        logger.warning(f"SQLi test failed: {e}")
+                        return []
                     
                     # Reset for next field test  
                     test_inputs[field_name] = inputs[field_name]
