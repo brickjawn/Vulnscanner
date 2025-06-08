@@ -1,5 +1,5 @@
 # GUI-enabled version with VNC support
-FROM python:3.11-alpine AS gui-builder
+FROM python:3.13-alpine AS gui-builder
 
 # Install build dependencies
 RUN apk add --no-cache \
@@ -22,7 +22,7 @@ RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
 # GUI production stage
-FROM python:3.11-alpine AS gui
+FROM python:3.13-alpine AS gui
 
 # Install runtime dependencies for GUI and VNC
 RUN apk add --no-cache \
