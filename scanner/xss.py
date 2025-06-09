@@ -16,13 +16,14 @@ XSS_PAYLOADS = [
     "<div onmouseover=\"alert('xss')\">test</div>"
 ]
 
-def test_xss(links, forms, progress_callback=None):
+def test_xss(links, forms, progress_callback=None, finding_callback=None):
     """
     Test forms for XSS vulnerabilities
     Args:
         links: List of URLs (unused but kept for compatibility)
         forms: List of (url, form_element) tuples
         progress_callback: Optional callback for progress updates
+        finding_callback: Optional callback for reporting findings in real-time
     Returns:
         List of vulnerability findings
     """
@@ -96,7 +97,10 @@ def test_xss(links, forms, progress_callback=None):
                             # Avoid duplicate findings
                             if not any(f['url'] == finding['url'] and f['details'] == finding['details'] for f in findings):
                                 findings.append(finding)
-                                print(f"{Fore.RED}[!] XSS Found: {url} - Field: {field_name}{Style.RESET_ALL}")
+                                if finding_callback:
+                                    finding_callback(finding)
+                                else:
+                                    print(f"{Fore.RED}[!] XSS Found: {url} - Field: {field_name}{Style.RESET_ALL}")
                             break  # Found XSS in this field, try next field
                             
                     except requests.exceptions.Timeout:
@@ -113,6 +117,6 @@ def test_xss(links, forms, progress_callback=None):
             print(f"{Fore.YELLOW}[!] Error testing XSS on {url}: {str(e)[:100]}{Style.RESET_ALL}")
             
         if progress_callback:
-            progress_callback(1)
+            progress_callback()
     
     return findings
