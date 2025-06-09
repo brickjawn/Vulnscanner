@@ -58,7 +58,7 @@ cd vulnscanner && chmod +x install.sh && sudo ./install.sh
 - **Multiple Output Formats** (CLI, JSON, CSV)
 
 ### Enhanced User Experience
-- **Modern GUI Interface** with progress bars and real-time updates
+- **🎨 Cutting-edge GUI Interface** with dark theme, responsive design, and real-time updates
 - **Comprehensive CLI** with colored output and progress indicators
 - **Detailed Vulnerability Reporting** with remediation advice
 - **Cross-platform Support** (Linux, macOS, Windows)
@@ -185,16 +185,27 @@ docker run -it --rm -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix \
 
 ### Graphical User Interface (GUI)
 
+Launch the modern GUI interface:
+
 ```bash
 ./vulnscan-gui
+# or launch directly with Python
+python3 gui.py
+# or use the demo script with pre-configured settings
+python3 demo_gui.py
 ```
 
-The GUI provides:
-- **Easy Configuration** with visual controls
-- **Real-time Progress** monitoring
-- **Live Output** with color-coded messages
-- **Export Options** with save dialog
-- **Scan Statistics** display
+#### 🎨 **Modern GUI Features**
+- **🌑 Dark Theme**: Professional cybersecurity aesthetic with GitHub-inspired design
+- **📱 Responsive Layout**: Automatically adapts to screen size (80% of display)
+- **📊 Real-time Monitoring**: Live progress bars and animated status updates
+- **🎯 Stat Cards**: Modern dashboard cards showing Pages, Forms, and Vulnerabilities
+- **💬 Enhanced Messaging**: Emoji-rich status updates and professional notifications
+- **🖥️ Terminal Output**: JetBrains Mono font with syntax-highlighted results
+- **⚙️ Configuration Panel**: Intuitive controls for all scan parameters
+- **🚀 Professional UX**: Cutting-edge design that fits modern penetration testing workflows
+
+The GUI provides an intuitive interface for configuring and running penetration tests with real-time progress monitoring and professional-grade output formatting.
 
 ## 📊 Output Examples
 

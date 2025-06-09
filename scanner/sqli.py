@@ -68,13 +68,14 @@ SQL_ERRORS = [
     "valid MySQL result", "MySqlClient", "ORA-01756"
 ]
 
-def test_sqli(links, forms, progress_callback=None):
+def test_sqli(links, forms, progress_callback=None, finding_callback=None):
     """
     Test forms for SQL injection vulnerabilities
     Args:
         links: List of URLs (unused but kept for compatibility)
         forms: List of (url, form_element) tuples
         progress_callback: Optional callback for progress updates
+        finding_callback: Optional callback for reporting findings in real-time
     Returns:
         List of vulnerability findings
     """
@@ -167,7 +168,10 @@ def test_sqli(links, forms, progress_callback=None):
                             # Avoid duplicate findings
                             if not any(f['url'] == finding['url'] and f['details'] == finding['details'] for f in findings):
                                 findings.append(finding)
-                                print(f"{Fore.RED}[!] SQLi Found: {url} - Field: {field_name} - Type: {vuln_type}{Style.RESET_ALL}")
+                                if finding_callback:
+                                    finding_callback(finding)
+                                else:
+                                    print(f"{Fore.RED}[!] SQLi Found: {url} - Field: {field_name} - Type: {vuln_type}{Style.RESET_ALL}")
                             break  # Found SQLi in this field, try next field
                             
                     except requests.exceptions.Timeout:
@@ -186,9 +190,13 @@ def test_sqli(links, forms, progress_callback=None):
                             
                             if not any(f['url'] == finding['url'] and f['details'] == finding['details'] for f in findings):
                                 findings.append(finding)
-                                print(f"{Fore.RED}[!] SQLi Found (Timeout): {url} - Field: {field_name}{Style.RESET_ALL}")
+                                if finding_callback:
+                                    finding_callback(finding)
+                                else:
+                                    print(f"{Fore.RED}[!] SQLi Found (Timeout): {url} - Field: {field_name}{Style.RESET_ALL}")
                         
-                        print(f"{Fore.YELLOW}[!] Timeout testing SQLi on {action}{Style.RESET_ALL}")
+                        if not finding_callback:
+                            print(f"{Fore.YELLOW}[!] Timeout testing SQLi on {action}{Style.RESET_ALL}")
                     except requests.exceptions.RequestException:
                         pass  # Continue with next test
                     except queue.Empty:
@@ -204,6 +212,6 @@ def test_sqli(links, forms, progress_callback=None):
             print(f"{Fore.YELLOW}[!] Error testing SQLi on {url}: {str(e)[:100]}{Style.RESET_ALL}")
             
         if progress_callback:
-            progress_callback(1)
+            progress_callback()
     
     return findings

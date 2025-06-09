@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=VulnScanner v2.0
+Comment=Advanced Penetration Testing Toolkit
+Exec=/home/crocboot/Downloads/Vulnscanner/vulnscan-gui
+Icon=security-high
+Terminal=false
+Categories=Security;Network;
