@@ -1,5 +1,7 @@
 # Python
 venv/
+.venv/
+env/
 __pycache__/
 *.py[cod]
 *.pyo
@@ -19,20 +21,28 @@ build/
 *.swo
 *~
 
-# Scanner outputs
+# Scanner outputs - don't commit scan results
 results/
 reports/
 logs/
 *.json
 *.csv
+!docker-compose.yml
 
 # Secrets - NEVER commit these
 .env
 *.env
+.env.*
+!.env.example
+secrets/
+credentials/
 cookies.txt
 *.key
 *.pem
 *.crt
+*.p12
+id_rsa*
+*.secret
 
 # OS
 .DS_Store
@@ -42,3 +52,9 @@ Thumbs.db
 .pytest_cache/
 .coverage
 htmlcov/
+
+# Temporary
+*.tmp
+*.bak
+.cache/
+tmp/
