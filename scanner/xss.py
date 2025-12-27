@@ -16,7 +16,7 @@ XSS_PAYLOADS = [
     "<div onmouseover=\"alert('xss')\">test</div>"
 ]
 
-def test_xss(links, forms, progress_callback=None, finding_callback=None):
+def test_xss(links, forms, progress_callback=None, finding_callback=None, scan_config=None):
     """
     Test forms for XSS vulnerabilities
     Args:
@@ -24,9 +24,29 @@ def test_xss(links, forms, progress_callback=None, finding_callback=None):
         forms: List of (url, form_element) tuples
         progress_callback: Optional callback for progress updates
         finding_callback: Optional callback for reporting findings in real-time
+        scan_config: Optional dict with authentication and request configuration:
+            - cookies: dict of cookies to send
+            - headers: dict of custom headers
+            - proxies: dict of proxy configuration
+            - verify_ssl: bool to verify SSL certificates
+            - timeout: int seconds for request timeout
+            - basic_auth: tuple (username, password)
+            - verbose: int verbosity level
     Returns:
         List of vulnerability findings
     """
+    # Default scan config
+    if scan_config is None:
+        scan_config = {}
+    
+    cookies = scan_config.get('cookies', {})
+    headers = scan_config.get('headers', {})
+    proxies = scan_config.get('proxies', None)
+    verify_ssl = scan_config.get('verify_ssl', True)
+    timeout = scan_config.get('timeout', 10)
+    basic_auth = scan_config.get('basic_auth', None)
+    verbose = scan_config.get('verbose', 0)
+    
     findings = []
     
     for url, form in forms:
@@ -42,13 +62,20 @@ def test_xss(links, forms, progress_callback=None, finding_callback=None):
             
             # Get all input fields
             inputs = {}
+            submit_inputs = {}  # Track submit buttons separately
+            
             for input_field in form.find_all(["input", "textarea", "select"]):
                 name = input_field.get("name")
                 if name:
                     field_type = input_field.get("type", "text")
                     
-                    # Skip certain input types
-                    if field_type.lower() in ["submit", "button", "reset", "file", "image"]:
+                    # Track submit buttons but don't inject into them
+                    if field_type.lower() == "submit":
+                        submit_inputs[name] = input_field.get("value", "Submit")
+                        continue
+                    
+                    # Skip other non-injectable input types
+                    if field_type.lower() in ["button", "reset", "file", "image"]:
                         continue
                         
                     # Use appropriate default values
@@ -58,11 +85,17 @@ def test_xss(links, forms, progress_callback=None, finding_callback=None):
                         inputs[name] = "password123"
                     elif field_type.lower() == "number":
                         inputs[name] = "123"
+                    elif field_type.lower() == "hidden":
+                        # Preserve hidden field values (often CSRF tokens)
+                        inputs[name] = input_field.get("value", "")
                     else:
                         inputs[name] = "test_value"
             
             if not inputs:
                 continue
+            
+            # Merge submit button values into inputs (needed for form processing)
+            inputs.update(submit_inputs)
                 
             # Test each payload
             for payload in XSS_PAYLOADS:
@@ -74,14 +107,43 @@ def test_xss(links, forms, progress_callback=None, finding_callback=None):
                     
                     try:
                         session = requests.Session()
-                        session.headers.update({
-                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-                        })
+                        
+                        # Set default User-Agent if not provided
+                        session_headers = headers.copy() if headers else {}
+                        if 'User-Agent' not in session_headers:
+                            session_headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+                        
+                        session.headers.update(session_headers)
+                        
+                        # Apply cookies
+                        if cookies:
+                            session.cookies.update(cookies)
+                        
+                        # Apply basic auth
+                        if basic_auth:
+                            session.auth = basic_auth
                         
                         if method == "post":
-                            response = session.post(action, data=test_inputs, timeout=10, allow_redirects=True)
+                            response = session.post(
+                                action, 
+                                data=test_inputs, 
+                                timeout=timeout, 
+                                allow_redirects=True,
+                                proxies=proxies,
+                                verify=verify_ssl
+                            )
                         else:
-                            response = session.get(action, params=test_inputs, timeout=10, allow_redirects=True)
+                            response = session.get(
+                                action, 
+                                params=test_inputs, 
+                                timeout=timeout, 
+                                allow_redirects=True,
+                                proxies=proxies,
+                                verify=verify_ssl
+                            )
+                        
+                        if verbose >= 2:
+                            print(f"{Fore.BLUE}    XSS Test: {action} [{method.upper()}] - {response.status_code}{Style.RESET_ALL}")
                         
                         # Check if payload is reflected in response
                         if payload in response.text or payload.lower() in response.text.lower():
@@ -103,6 +165,12 @@ def test_xss(links, forms, progress_callback=None, finding_callback=None):
                                     print(f"{Fore.RED}[!] XSS Found: {url} - Field: {field_name}{Style.RESET_ALL}")
                             break  # Found XSS in this field, try next field
                             
+                    except requests.exceptions.SSLError as e:
+                        if verbose >= 1:
+                            print(f"{Fore.YELLOW}[!] SSL error testing XSS on {action}: {str(e)[:50]}{Style.RESET_ALL}")
+                    except requests.exceptions.ProxyError as e:
+                        if verbose >= 1:
+                            print(f"{Fore.YELLOW}[!] Proxy error testing XSS on {action}: {str(e)[:50]}{Style.RESET_ALL}")
                     except requests.exceptions.Timeout:
                         print(f"{Fore.YELLOW}[!] Timeout testing XSS on {action}{Style.RESET_ALL}")
                     except requests.exceptions.RequestException:
